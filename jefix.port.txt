@@ -1,0 +1,372 @@
+import React, { useMemo, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  ArrowRight,
+  Instagram,
+  Mail,
+  Phone,
+  Link as LinkIcon,
+  DollarSign,
+  Send,
+  Sparkles,
+  CheckCircle,
+} from "lucide-react";
+
+// ---- THEME ----
+const brand = {
+  primary: "from-[#0b0f1a] via-[#0e1630] to-[#0b0f1a]", // deep space
+  accent: "#786CFF", // premium indigo
+  accentSoft: "#A697FF",
+  glass: "bg-white/5 backdrop-blur-xl border border-white/10",
+};
+
+// ---- SMALL UTILITIES ----
+const Section = ({ id, className = "", children }) => (
+  <section id={id} className={`w-full max-w-7xl mx-auto px-4 md:px-8 ${className}`}>
+    {children}
+  </section>
+);
+
+const Field = ({ label, children }) => (
+  <label className="flex flex-col gap-2 text-sm text-white/80">
+    <span className="tracking-wide">{label}</span>
+    {children}
+  </label>
+);
+
+// ---- MAIN APP ----
+export default function Portfolio() {
+  const [openHire, setOpenHire] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const hireRef = useRef(null);
+
+  const smooth = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.7 } },
+  };
+
+  const year = useMemo(() => new Date().getFullYear(), []);
+
+  return (
+    <div
+      className={`min-h-screen text-white ${brand.primary} bg-gradient-to-b relative overflow-x-hidden`}
+      style={{ scrollBehavior: "smooth" }}
+    >
+      {/* Decorative gradients */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full blur-3xl opacity-30"
+             style={{ background: brand.accent }} />
+        <div className="absolute top-1/3 -right-24 h-96 w-96 rounded-full blur-3xl opacity-20"
+             style={{ background: brand.accentSoft }} />
+      </div>
+
+      {/* NAV */}
+      <nav className="sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-5 flex items-center justify-between">
+          <motion.a
+            href="#home"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-lg md:text-xl font-semibold tracking-[0.12em] uppercase text-white/90"
+          >
+            jefix<span className="text-white/60">.</span>design
+          </motion.a>
+
+          <div className="hidden md:flex gap-6 text-white/70 text-sm">
+            <a href="#work" className="hover:text-white transition">Work</a>
+            <a href="#services" className="hover:text-white transition">Services</a>
+            <a href="#about" className="hover:text-white transition">About</a>
+            <button onClick={() => setOpenHire(true)} className="hover:text-white transition">Hire Me</button>
+          </div>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <Section id="home" className="relative pt-10 md:pt-20">
+        <div className="grid md:grid-cols-2 gap-10 items-center">
+          {/* Left copy */}
+          <motion.div
+            variants={smooth}
+            initial="hidden"
+            animate="show"
+            className="flex flex-col gap-6"
+          >
+            <div className={`p-1 rounded-full w-fit ${brand.glass}`}>
+              <div className="px-4 py-1.5 rounded-full flex items-center gap-2">
+                <Sparkles className="w-4 h-4 opacity-80" />
+                <span className="text-xs uppercase tracking-widest text-white/70">Premium Thumbnail Designer</span>
+              </div>
+            </div>
+
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+              <span className="text-white/80">Hey—it's me</span>
+              <br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">Jeff</span>
+            </h1>
+
+            <p className={`max-w-xl text-white/70 leading-relaxed ${brand.glass} p-4 rounded-2xl`}> 
+              <span className="font-semibold text-white">I'M A THUMBNAIL DESIGNER.</span> I craft CTR-boosting, eye‑catching thumbnails that level up your channel and make people click. My goal is simple: increase your potential and skyrocket your CTR with high-impact visuals.
+            </p>
+
+            {/* Contact chips */}
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => setOpenHire(true)}
+                className="group inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold shadow-2xl border border-white/10 bg-white/10 hover:bg-white/15 transition"
+              >
+                Hire Me <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition" />
+              </button>
+
+              <button
+                onClick={() => setOpenHire(true)}
+                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm border border-white/10 bg-white/5 hover:bg-white/10 transition"
+                title="Instagram"
+              >
+                <Instagram className="w-4 h-4" /> @JEFIX.DESIGNS
+              </button>
+
+              <button
+                onClick={() => setOpenHire(true)}
+                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm border border-white/10 bg-white/5 hover:bg-white/10 transition"
+                title="Email"
+              >
+                <Mail className="w-4 h-4" /> jefix.designs.creative
+              </button>
+            </div>
+
+            <div className="text-xs text-white/60">*Click Instagram, Email, or Hire Me → opens the inquiry page.</div>
+          </motion.div>
+
+          {/* Right image */}
+          <motion.div
+            variants={smooth}
+            initial="hidden"
+            animate="show"
+            transition={{ delay: 0.1 }}
+            className="relative"
+          >
+            <div className={`relative rounded-[28px] overflow-hidden border border-white/10 shadow-2xl ${brand.glass}`}>
+              {/* Replace the src with your own file path */}
+              <img
+                src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=1200&auto=format&fit=crop"
+                alt="Jeff portrait placeholder"
+                className="w-full aspect-square object-cover"
+              />
+
+              {/* arrow label */}
+              <div className="absolute -left-3 top-5 rotate-[-6deg]">
+                <div className="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 border border-white/10 backdrop-blur">
+                  it's me → Jeff
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* floating hire button */}
+        <button
+          onClick={() => setOpenHire(true)}
+          className="fixed bottom-6 right-6 z-50 px-6 py-3 rounded-full font-semibold shadow-2xl border border-white/10 bg-white/10 hover:bg-white/20 transition animate-[float_3.5s_ease-in-out_infinite]"
+          style={{ animationName: "float" }}
+        >
+          Hire Me
+        </button>
+        <style>{`
+          @keyframes float { 0%,100%{ transform: translateY(0)} 50%{ transform: translateY(-8px)} }
+        `}</style>
+      </Section>
+
+      {/* SERVICES */}
+      <Section id="services" className="mt-24 md:mt-40">
+        <motion.h2 variants={smooth} initial="hidden" whileInView="show" viewport={{ once: true }} className="text-2xl md:text-3xl font-semibold mb-8">Services</motion.h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            { t: "YouTube Thumbnails", d: "Scroll-stopping designs optimized for CTR." },
+            { t: "A/B Variant Sets", d: "Multiple options to test what performs best." },
+            { t: "Channel Branding", d: "Covers, logos, and cohesive visual systems." },
+          ].map((c, i) => (
+            <motion.div key={i} variants={smooth} initial="hidden" whileInView="show" viewport={{ once: true }} className={`p-6 rounded-3xl ${brand.glass} hover:bg-white/10 transition`}> 
+              <div className="flex items-start gap-3">
+                <CheckCircle className="w-5 h-5 mt-1 text-white/80" />
+                <div>
+                  <h3 className="font-semibold mb-1">{c.t}</h3>
+                  <p className="text-white/70 text-sm">{c.d}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </Section>
+
+      {/* WORK (placeholders) */}
+      <Section id="work" className="mt-24 md:mt-40">
+        <motion.h2 variants={smooth} initial="hidden" whileInView="show" viewport={{ once: true }} className="text-2xl md:text-3xl font-semibold mb-8">Selected Work</motion.h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1,2,3,4,5,6].map((n) => (
+            <div key={n} className={`group relative aspect-[16/9] rounded-3xl overflow-hidden ${brand.glass}`}>
+              <div className="absolute inset-0 grid place-items-center text-white/60 text-sm">
+                Add your thumbnail #{n}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ABOUT */}
+      <Section id="about" className="mt-24 md:mt-40">
+        <motion.h2 variants={smooth} initial="hidden" whileInView="show" viewport={{ once: true }} className="text-2xl md:text-3xl font-semibold mb-8">About</motion.h2>
+        <div className={`rounded-3xl p-6 md:p-8 ${brand.glass} leading-relaxed text-white/80`}>
+          I’m Jeff — a detail‑driven thumbnail designer focused on performance. I combine bold composition, tight typography, and color psychology to create visuals people can’t ignore. I work fast, communicate clearly, and deliver files ready for upload.
+        </div>
+      </Section>
+
+      {/* CTA */}
+      <Section className="mt-24 md:mt-40 mb-28">
+        <div className={`rounded-3xl p-8 md:p-12 text-center ${brand.glass}`}>
+          <h3 className="text-3xl md:text-4xl font-bold mb-4">Let’s grow your channel.</h3>
+          <p className="text-white/70 mb-6">Tell me about your project and get a fast, focused proposal today.</p>
+          <button onClick={() => setOpenHire(true)} className="px-6 py-3 rounded-full font-semibold shadow-2xl border border-white/10 bg-white/10 hover:bg-white/20 transition inline-flex items-center gap-2">
+            Start a Project <Send className="w-4 h-4" />
+          </button>
+        </div>
+      </Section>
+
+      {/* FOOTER */}
+      <footer className="relative border-t border-white/10/20">
+        <Section className="py-10 flex flex-col md:flex-row items-center justify-between gap-4 text-white/60 text-sm">
+          <div>© {year} jefix.design · All rights reserved.</div>
+          <div className="flex items-center gap-4">
+            <button onClick={() => setOpenHire(true)} className="inline-flex items-center gap-2 hover:text-white">
+              <Instagram className="w-4 h-4" /> @JEFIX.DESIGNS
+            </button>
+            <button onClick={() => setOpenHire(true)} className="inline-flex items-center gap-2 hover:text-white">
+              <Mail className="w-4 h-4" /> jefix.designs.creative
+            </button>
+          </div>
+        </Section>
+      </footer>
+
+      {/* HIRE OVERLAY (acts like another page inside the portfolio) */}
+      <AnimatePresence>
+        {openHire && (
+          <motion.div
+            ref={hireRef}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center px-4"
+          >
+            <motion.div
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 20, opacity: 0 }}
+              className={`w-full max-w-3xl rounded-3xl overflow-hidden ${brand.glass}`}
+            >
+              {!submitted ? (
+                <div className="p-6 md:p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl md:text-2xl font-semibold">Project Inquiry</h3>
+                    <button onClick={() => setOpenHire(false)} className="text-white/60 hover:text-white">Close</button>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-5">
+                    <Field label="Your Name">
+                      <input className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-white/20" placeholder="Full name" />
+                    </Field>
+
+                    <Field label="Country">
+                      <input className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-white/20" placeholder="Where are you from?" />
+                    </Field>
+
+                    <Field label="What do you need a designer for?">
+                      <select className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none">
+                        <option>Channel</option>
+                        <option>Business</option>
+                        <option>Personal Brand</option>
+                      </select>
+                    </Field>
+
+                    <Field label="Why do you need a thumbnail designer?">
+                      <input className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none" placeholder="e.g. Improve CTR, rebrand, launch series" />
+                    </Field>
+
+                    <Field label="Phone / WhatsApp">
+                      <input className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none" placeholder="+00 000 000 000" />
+                    </Field>
+
+                    <Field label="Channel Link">
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white/60 text-sm"><LinkIcon className="inline w-4 h-4 mr-1" />URL</span>
+                        <input className="flex-1 px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none" placeholder="https://youtube.com/..." />
+                      </div>
+                    </Field>
+
+                    <Field label="Instagram">
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white/60 text-sm"><Instagram className="inline w-4 h-4 mr-1" />@</span>
+                        <input className="flex-1 px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none" placeholder="username" defaultValue="JEFIX.DESIGNS" />
+                      </div>
+                    </Field>
+
+                    <Field label="Email">
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white/60 text-sm"><Mail className="inline w-4 h-4 mr-1" />@</span>
+                        <input className="flex-1 px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none" placeholder="name@email.com" defaultValue="jefix.designs.creative" />
+                      </div>
+                    </Field>
+
+                    <Field label="Budget">
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white/60 text-sm"><DollarSign className="inline w-4 h-4 mr-1" />Range</span>
+                        <select className="flex-1 px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none">
+                          <option>$10 / 100</option>
+                          <option>$100 / 1000</option>
+                          <option>$1000 / 5000</option>
+                          <option>$5000 / 10000</option>
+                        </select>
+                      </div>
+                    </Field>
+
+                    <Field label="Thumbnail Type">
+                      <select className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none">
+                        <option>Gaming</option>
+                        <option>Money / Strategy</option>
+                        <option>Business</option>
+                        <option>Vlogs</option>
+                        <option>Challenges</option>
+                        <option>Comedy</option>
+                      </select>
+                    </Field>
+
+                    <Field label="Personal note for JEFIX.DESIGNS">
+                      <textarea rows={4} className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none" placeholder="Share details, references, deadlines, etc." />
+                    </Field>
+                  </div>
+
+                  <div className="mt-6 flex items-center justify-between">
+                    <div className="text-xs text-white/50">I’ll reply within 24h with next steps.</div>
+                    <button onClick={() => setSubmitted(true)} className="px-6 py-3 rounded-full font-semibold shadow-2xl border border-white/10 bg-white/10 hover:bg-white/20 transition inline-flex items-center gap-2">
+                      Send Inquiry <Send className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-10 text-center">
+                  <div className="text-6xl font-black tracking-tight mb-2">THANKS</div>
+                  <div className="text-white/70 mb-8">Let’s work together — I’ll get back to you shortly.</div>
+                  <button onClick={() => { setSubmitted(false); setOpenHire(false); }} className="px-6 py-3 rounded-full font-semibold shadow-2xl border border-white/10 bg-white/10 hover:bg-white/20 transition">Back to Portfolio</button>
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* BOTTOM THANKS SECTION (end of page) */}
+      <Section className="mt-32 md:mt-44 mb-24 text-center">
+        <div className="text-6xl md:text-7xl font-black tracking-tight mb-4">THANKS</div>
+        <div className="text-white/70 text-lg md:text-xl">Let’s work together — DM me.</div>
+      </Section>
+    </div>
+  );
+}
